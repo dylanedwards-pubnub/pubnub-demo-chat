@@ -17,6 +17,11 @@ code {
   height: 40px;
 }
 
+#right-message-text{
+  margin: 0;
+  padding: 0;
+}
+
 .message-info{
   margin: 0;
   padding: 0;
@@ -208,7 +213,7 @@ body{
 
 .chat .chat-history .right-message:after {
   border-bottom-color: #e8f1f3;
-  left: 93%
+  left: 85%
 }
 
 .chat .chat-message {

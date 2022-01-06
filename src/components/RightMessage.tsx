@@ -1,20 +1,19 @@
-import React from 'react'
-import IChatMessage from '../types/chatMessage'
+import React from "react";
+import IChatMessage from "../types/chatMessage";
 
 interface IRightMessageProps {
-  chatMessage: IChatMessage
-    
+  chatMessage: IChatMessage;
 }
 
 const RightMessage = (props: IRightMessageProps) => {
-    return (
-        <li className="clearfix">
 
-        <div className="message right-message">
-          Hi Aiden, how are you? How is the project coming along?{" "}
-        </div>
-      </li>
-    )
-}
+  return (
+    <li className="clearfix">
+      <div className="message right-message right-message-text">
+        <p id="right-message-text">{props.chatMessage.m[0].d.message}</p>
+      </div>
+    </li>
+  );
+};
 
-export default RightMessage
+export default RightMessage;

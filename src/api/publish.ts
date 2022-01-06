@@ -12,7 +12,8 @@ const publish = (
 
   var data = JSON.stringify({
     message: message,
-    sender: publisherScreenName
+    sender: publisherScreenName,
+    senderUuid: publisherUuid
   });
 
   var config = {

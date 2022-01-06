@@ -1,3 +1,4 @@
+import { nanoid } from "nanoid";
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +17,11 @@ const SelectRoom = () => {
     let navigate = useNavigate();
     useEffect(() => {
       navigate(props.to, {
-        state: { username: props.username, chatroomName: props.chatroomName },
+        state: {
+          username: props.username,
+          chatroomName: props.chatroomName,
+          userUuid: nanoid(),
+        },
       });
     });
     return null;

@@ -10,7 +10,7 @@ type messagePayload = {
   p: { t: string; r: number };
   k: string;
   c: string;
-  d: { message: string; sender: string };
+  d: { message: string; sender: string, senderUuid: string};
 };
 
 export default IChatMessage;

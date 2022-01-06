@@ -11,6 +11,7 @@ import { useLocation } from "react-router-dom";
 type chatroomState = {
   username: string;
   chatroomName: string;
+  userUuid: string
 };
 
 function ChatRoom() {
@@ -22,13 +23,12 @@ function ChatRoom() {
   console.log("state: ", state);
 
   const channelName = state.chatroomName;
-  const userUuid = nanoid();
   const startingTimeToken = "0";
 
   useEffect(() => {
     subscribe(
       channelName,
-      userUuid,
+      state.userUuid,
       startingTimeToken,
       setChatMessages,
       chatMessages
@@ -50,7 +50,11 @@ function ChatRoom() {
         <div className="chat-history">
           <ul className="m-b-0">
             {chatMessages.map((msg) => {
-              return <LeftMessage chatMessage={msg} key={nanoid()} />;
+              return msg.m[0].d.senderUuid === state.userUuid ? (
+                <RightMessage chatMessage={msg} key={nanoid()} />
+              ) : (
+                <LeftMessage chatMessage={msg} key={nanoid()} />
+              );
             })}
           </ul>
         </div>
@@ -61,7 +65,7 @@ function ChatRoom() {
                 className="input-group-text send-icon"
                 onClick={(e) => {
                   e.preventDefault();
-                  publish(channelName, userUuid, state.username, messageToSend);
+                  publish(channelName, state.userUuid, state.username, messageToSend);
                   setMessageToSend("");
                 }}
               >
