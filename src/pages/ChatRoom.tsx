@@ -4,6 +4,8 @@ import LeftMessage from "../components/LeftMessage";
 import { hasSubscribers } from "diagnostics_channel";
 import subscribe from "../api/subscribe";
 import publish from "../api/publish";
+import hereNow from "../api/hereNow";
+
 import IChatMessage from "../types/chatMessage";
 import { nanoid } from "nanoid";
 import { useLocation } from "react-router-dom";
@@ -19,11 +21,10 @@ function ChatRoom() {
   const state = location.state as chatroomState;
   const [chatMessages, setChatMessages] = useState<Array<IChatMessage>>([]);
   const [messageToSend, setMessageToSend] = useState<string>("");
-
-  console.log("state: ", state);
-
+  const [numberUsersInChat, setNumberUsersInChat] = useState<number>(0);
   const channelName = state.chatroomName;
   const startingTimeToken = "0";
+  hereNow(channelName, state.userUuid, setNumberUsersInChat)
 
   useEffect(() => {
     subscribe(
@@ -33,10 +34,22 @@ function ChatRoom() {
       setChatMessages,
       chatMessages
     );
-    // return () => {
-    //   cleanup
-    // }
+
+    const interval = setInterval(() => {
+      console.log('check user presence every 60 seconds');
+      const response = hereNow(channelName, state.userUuid, setNumberUsersInChat)
+    }, 60000);
+ 
+    return () => clearInterval(interval);
   }, []);
+
+  // useEffect(() => {
+  //   const interval = setInterval(() => {
+  //     console.log('check user presence every 60 seconds');
+  //     const response = hereNow(channelName, state.userUuid, setNumberUsersInChat)
+  //   }, 60000);
+  //   return () => clearInterval(interval);
+  // }, []);
 
   return (
     <div>
@@ -46,7 +59,7 @@ function ChatRoom() {
       />
 
       <div className="chat">
-        <div className="chat-header clearfix">5 people in chat</div>
+        <div className="chat-header clearfix">{numberUsersInChat} people in chat</div>
         <div className="chat-history">
           <ul className="m-b-0">
             {chatMessages.map((msg) => {
