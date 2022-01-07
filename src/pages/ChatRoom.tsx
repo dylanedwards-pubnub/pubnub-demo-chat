@@ -5,7 +5,7 @@ import { hasSubscribers } from "diagnostics_channel";
 import subscribe from "../api/subscribe";
 import publish from "../api/publish";
 import hereNow from "../api/hereNow";
-
+import subscribePresense from "../api/subscribePresense";
 import IChatMessage from "../types/chatMessage";
 import { nanoid } from "nanoid";
 import { useLocation } from "react-router-dom";
@@ -13,7 +13,7 @@ import { useLocation } from "react-router-dom";
 type chatroomState = {
   username: string;
   chatroomName: string;
-  userUuid: string
+  userUuid: string;
 };
 
 function ChatRoom() {
@@ -24,33 +24,28 @@ function ChatRoom() {
   const [numberUsersInChat, setNumberUsersInChat] = useState<number>(0);
   const channelName = state.chatroomName;
   const startingTimeToken = "0";
-  hereNow(channelName, state.userUuid, setNumberUsersInChat)
+
 
   useEffect(() => {
+    hereNow(channelName, state.userUuid, setNumberUsersInChat);
+    
     subscribe(
       channelName,
       state.userUuid,
       startingTimeToken,
       setChatMessages,
-      chatMessages, 
+      chatMessages,
       null
     );
 
-    const interval = setInterval(() => {
-      console.log('check user presence every 60 seconds');
-      const response = hereNow(channelName, state.userUuid, setNumberUsersInChat)
-    }, 60000);
- 
-    return () => clearInterval(interval);
+    subscribePresense(
+      channelName,
+      state.userUuid,
+      startingTimeToken,
+      setNumberUsersInChat,
+      null
+    );
   }, []);
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     console.log('check user presence every 60 seconds');
-  //     const response = hereNow(channelName, state.userUuid, setNumberUsersInChat)
-  //   }, 60000);
-  //   return () => clearInterval(interval);
-  // }, []);
 
   return (
     <div>
@@ -60,7 +55,9 @@ function ChatRoom() {
       />
 
       <div className="chat">
-        <div className="chat-header clearfix">{numberUsersInChat} people in chat</div>
+        <div className="chat-header clearfix">
+          {numberUsersInChat} people in chat
+        </div>
         <div className="chat-history">
           <ul className="m-b-0">
             {chatMessages.map((msg) => {
@@ -79,7 +76,12 @@ function ChatRoom() {
                 className="input-group-text send-icon"
                 onClick={(e) => {
                   e.preventDefault();
-                  publish(channelName, state.userUuid, state.username, messageToSend);
+                  publish(
+                    channelName,
+                    state.userUuid,
+                    state.username,
+                    messageToSend
+                  );
                   setMessageToSend("");
                 }}
               >

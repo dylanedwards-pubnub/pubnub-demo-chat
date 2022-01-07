@@ -1,13 +1,13 @@
 import axios from "axios";
 import IChatMessage from "../types/chatMessage";
 
-const subscribe = async (
+const subscribe = (
   channelName: string,
   subscriberUuid: string,
   timeToken: string,
   setChatMessages: React.Dispatch<React.SetStateAction<IChatMessage[]>>,
   chatMessages: Array<IChatMessage>,
-  region: null | string
+  region: null | number
 
 ) => {
   const subKey = process.env.REACT_APP_SUB_KEY
@@ -30,7 +30,7 @@ const subscribe = async (
       }
       // parse  out time token for a new call 
       console.log(response.data.t.t)
-      subscribe( channelName,subscriberUuid, response.data.t.t, setChatMessages, chatMessages, response.data.t.t.r)
+      subscribe( channelName,subscriberUuid, newMessage.t.t, setChatMessages, chatMessages, newMessage.t.r)
     })
     .catch(function (error) {
       console.log(error);
