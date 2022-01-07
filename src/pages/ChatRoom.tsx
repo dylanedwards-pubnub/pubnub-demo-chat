@@ -32,7 +32,8 @@ function ChatRoom() {
       state.userUuid,
       startingTimeToken,
       setChatMessages,
-      chatMessages
+      chatMessages, 
+      null
     );
 
     const interval = setInterval(() => {
