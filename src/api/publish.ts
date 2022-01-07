@@ -21,6 +21,7 @@ const publish = (
       "Content-Type": "application/json",
     },
   };
+  console.log("PUBLISH");
 
   axios
     .post(url, data, config)

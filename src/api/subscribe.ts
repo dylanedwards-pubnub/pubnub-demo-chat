@@ -9,7 +9,7 @@ const subscribe = async (
   chatMessages: Array<IChatMessage>
 ) => {
   const subKey = process.env.REACT_APP_SUB_KEY
-  const url = `https://ps.pndsn.com/v2/subscribe/${subKey}/${channelName}/0?uuid=${subscriberUuid}&tt=${timeToken}&tr=2`;
+  const url = `https://ps.pndsn.com/v2/subscribe/${subKey}/${channelName}/0?uuid=${subscriberUuid}&tt=${timeToken}`;
   console.log("starting sub call w time token: ", timeToken)
   axios
     .get(url)
