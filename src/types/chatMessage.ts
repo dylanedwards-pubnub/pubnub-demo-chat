@@ -7,12 +7,18 @@ export type messagePayload = {
   a: string;
   f: number;
   i: string;
-  p: { t: string; r: number };
+  p: { t: number; r: number };
   k: string;
   c: string;
-  d: messageData;
+  d: subMessageData;
 };
 
+
+export type subMessageData = {
+  message: string;
+  sender: string;
+  senderUuid: string;
+};
 
 export type messageData = {
   message: string;
@@ -20,4 +26,3 @@ export type messageData = {
   senderUuid: string;
   timetoken: number
 };
-

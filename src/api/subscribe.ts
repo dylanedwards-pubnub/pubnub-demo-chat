@@ -24,9 +24,17 @@ const subscribe = (
     .then(function (response) {
       console.log(JSON.stringify(response.data));
       //add data to chat messages if not the first sub
-      const newMessage = response.data as unknown as IChatMessage
+      const newMessage = response.data  as IChatMessage
       if ( newMessage.m.length > 0) {
-        setChatMessages(chatMessages => [...chatMessages, newMessage.m[0].d])
+        // create a new instance of message data from the sub payload
+        const messageToAdd : messageData = {
+          message: newMessage.m[0].d.message,
+          sender: newMessage.m[0].d.sender,
+          senderUuid: newMessage.m[0].d.senderUuid,
+          timetoken: newMessage.m[0].p.t
+        }
+        // newMessage.m[0].d
+        setChatMessages(chatMessages => [...chatMessages, messageToAdd])
       }
       // parse  out time token for a new call 
       console.log(response.data.t.t)
