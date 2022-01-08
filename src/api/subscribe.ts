@@ -1,12 +1,12 @@
 import axios from "axios";
-import IChatMessage from "../types/chatMessage";
+import {IChatMessage, messageData} from "../types/chatMessage";
 
 const subscribe = (
   channelName: string,
   subscriberUuid: string,
   timeToken: string,
-  setChatMessages: React.Dispatch<React.SetStateAction<IChatMessage[]>>,
-  chatMessages: Array<IChatMessage>,
+  setChatMessages: React.Dispatch<React.SetStateAction<messageData[]>>,
+  chatMessages: Array<messageData>,
   region: null | number
 
 ) => {
@@ -26,7 +26,7 @@ const subscribe = (
       //add data to chat messages if not the first sub
       const newMessage = response.data as unknown as IChatMessage
       if ( newMessage.m.length > 0) {
-        setChatMessages(chatMessages => [...chatMessages, newMessage])
+        setChatMessages(chatMessages => [...chatMessages, newMessage.m[0].d])
       }
       // parse  out time token for a new call 
       console.log(response.data.t.t)

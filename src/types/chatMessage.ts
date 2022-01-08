@@ -1,16 +1,23 @@
-interface IChatMessage {
+export interface IChatMessage {
   t: { t: string; r: number };
   m: Array<messagePayload>;
 }
 
-type messagePayload = {
+export type messagePayload = {
   a: string;
   f: number;
   i: string;
   p: { t: string; r: number };
   k: string;
   c: string;
-  d: { message: string; sender: string, senderUuid: string};
+  d: messageData;
 };
 
-export default IChatMessage;
+
+export type messageData = {
+  message: string;
+  sender: string;
+  senderUuid: string;
+  timetoken: number
+};
+

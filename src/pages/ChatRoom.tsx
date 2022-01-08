@@ -6,7 +6,7 @@ import subscribe from "../api/subscribe";
 import publish from "../api/publish";
 import hereNow from "../api/hereNow";
 import subscribePresense from "../api/subscribePresense";
-import IChatMessage from "../types/chatMessage";
+import {IChatMessage, messageData} from "../types/chatMessage";
 import { nanoid } from "nanoid";
 import { useLocation } from "react-router-dom";
 
@@ -19,7 +19,8 @@ type chatroomState = {
 function ChatRoom() {
   const location = useLocation();
   const state = location.state as chatroomState;
-  const [chatMessages, setChatMessages] = useState<Array<IChatMessage>>([]);
+  console.log(state)
+  const [chatMessages, setChatMessages] = useState<Array<messageData>>([]);
   const [messageToSend, setMessageToSend] = useState<string>("");
   const [numberUsersInChat, setNumberUsersInChat] = useState<number>(0);
   const channelName = state.chatroomName;
@@ -61,7 +62,7 @@ function ChatRoom() {
         <div className="chat-history">
           <ul className="m-b-0">
             {chatMessages.map((msg) => {
-              return msg.m[0].d.senderUuid === state.userUuid ? (
+              return msg.senderUuid === state.userUuid ? (
                 <RightMessage chatMessage={msg} key={nanoid()} />
               ) : (
                 <LeftMessage chatMessage={msg} key={nanoid()} />

@@ -2,7 +2,14 @@ import { nanoid } from "nanoid";
 import React, { useEffect, useState } from "react";
 import { Button, Form, Modal } from "react-bootstrap";
 import { useNavigate } from "react-router-dom";
+import USER_UUID_KEY from "../types/userUuidKey";
 const SelectRoom = () => {
+  // make a uuid for this user
+  let userUuid = localStorage.getItem(USER_UUID_KEY);
+  if (userUuid === null) {
+    // set user uuid
+    localStorage.setItem(USER_UUID_KEY, nanoid());
+  }
   const [shouldRedirectToRoom, setShouldRedirect] = useState(false);
   const [screenName, setScreenName] = useState<string>("");
   const [chatroomName, setChatroomName] = useState<string>("");
@@ -20,7 +27,7 @@ const SelectRoom = () => {
         state: {
           username: props.username,
           chatroomName: props.chatroomName,
-          userUuid: nanoid(),
+          userUuid: userUuid,
         },
       });
     });
