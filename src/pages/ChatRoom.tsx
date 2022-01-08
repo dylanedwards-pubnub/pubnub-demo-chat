@@ -6,9 +6,10 @@ import subscribe from "../api/subscribe";
 import publish from "../api/publish";
 import hereNow from "../api/hereNow";
 import subscribePresense from "../api/subscribePresense";
-import {IChatMessage, messageData} from "../types/chatMessage";
+import { IChatMessage, messageData } from "../types/chatMessage";
 import { nanoid } from "nanoid";
 import { useLocation } from "react-router-dom";
+import getChatHistory from "../api/getChatHistory";
 
 type chatroomState = {
   username: string;
@@ -19,17 +20,18 @@ type chatroomState = {
 function ChatRoom() {
   const location = useLocation();
   const state = location.state as chatroomState;
-  console.log(state)
+  console.log(state);
   const [chatMessages, setChatMessages] = useState<Array<messageData>>([]);
   const [messageToSend, setMessageToSend] = useState<string>("");
   const [numberUsersInChat, setNumberUsersInChat] = useState<number>(0);
   const channelName = state.chatroomName;
   const startingTimeToken = "0";
 
-
   useEffect(() => {
-    hereNow(channelName, state.userUuid, setNumberUsersInChat);
+    getChatHistory(channelName, state.userUuid, setChatMessages);
     
+    hereNow(channelName, state.userUuid, setNumberUsersInChat);
+
     subscribe(
       channelName,
       state.userUuid,

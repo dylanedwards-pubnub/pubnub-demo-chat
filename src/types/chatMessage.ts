@@ -13,7 +13,6 @@ export type messagePayload = {
   d: subMessageData;
 };
 
-
 export type subMessageData = {
   message: string;
   sender: string;
@@ -24,5 +23,15 @@ export type messageData = {
   message: string;
   sender: string;
   senderUuid: string;
-  timetoken: number
+  timetoken: number;
+};
+
+export type historicalMessage = {
+  message: {
+    senderUuid: string;
+    message: string;
+    sender: string;
+  };
+  timetoken: number;
+  meta: string;
 };
