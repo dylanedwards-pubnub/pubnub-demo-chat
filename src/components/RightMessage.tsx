@@ -1,8 +1,8 @@
 import React from "react";
-import IChatMessage from "../types/chatMessage";
+import {messageData} from '../types/chatMessage'
 
 interface IRightMessageProps {
-  chatMessage: IChatMessage;
+  chatMessage: messageData;
 }
 
 const RightMessage = (props: IRightMessageProps) => {
@@ -10,7 +10,7 @@ const RightMessage = (props: IRightMessageProps) => {
   return (
     <li className="clearfix">
       <div className="message right-message right-message-text">
-        <p id="right-message-text">{props.chatMessage.m[0].d.message}</p>
+        <p id="right-message-text">{props.chatMessage.message}</p>
       </div>
     </li>
   );

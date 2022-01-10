@@ -1,16 +1,37 @@
-interface IChatMessage {
+export interface IChatMessage {
   t: { t: string; r: number };
   m: Array<messagePayload>;
 }
 
-type messagePayload = {
+export type messagePayload = {
   a: string;
   f: number;
   i: string;
-  p: { t: string; r: number };
+  p: { t: number; r: number };
   k: string;
   c: string;
-  d: { message: string; sender: string, senderUuid: string};
+  d: subMessageData;
 };
 
-export default IChatMessage;
+export type subMessageData = {
+  message: string;
+  sender: string;
+  senderUuid: string;
+};
+
+export type messageData = {
+  message: string;
+  sender: string;
+  senderUuid: string;
+  timetoken: number;
+};
+
+export type historicalMessage = {
+  message: {
+    senderUuid: string;
+    message: string;
+    sender: string;
+  };
+  timetoken: number;
+  meta: string;
+};
