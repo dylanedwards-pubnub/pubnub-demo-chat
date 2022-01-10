@@ -20,7 +20,6 @@ type chatroomState = {
 function ChatRoom() {
   const location = useLocation();
   const state = location.state as chatroomState;
-  console.log(state);
   const [chatMessages, setChatMessages] = useState<Array<messageData>>([]);
   const [messageToSend, setMessageToSend] = useState<string>("");
   const [numberUsersInChat, setNumberUsersInChat] = useState<number>(0);

@@ -27,7 +27,6 @@ const subscribePresence = (
           setNumberUsersInChat(newMessage.m[0].u.pn_occupancy)
       }
       // parse  out time token for a new call 
-      console.log(newMessage.t.t)
       subscribePresence( channelName,subscriberUuid, newMessage.t.t, setNumberUsersInChat, newMessage.t.r)
     })
     .catch(function (error) {
